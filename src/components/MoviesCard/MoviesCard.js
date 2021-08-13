@@ -26,7 +26,7 @@ function MoviesCard({card}){
                     />
                 </Route>
             </div>
-            <img src={card.link} alt="" className="moviesCard__photo"/>
+            <img src={card.link} alt="Фото фильма" className="moviesCard__photo"/>
         </li>
     )
 }

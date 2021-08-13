@@ -12,20 +12,20 @@ function Login(){
         path='/signup'
         ifLognin={false}
         >
-            <form  className="auth">
                 <label htmlFor="Email" className="auth__about">E-mail</label>
-                <input type="text"
+                <input type="email"
                        className="auth__input"
                        placeholder="Ваш email"
+                       required
                        id="Email"
                 />
                 <label htmlFor="Password" className="auth__about">Password</label>
-                <input type="text"
+                <input type="password"
                        className="auth__input"
                        placeholder="Ваш password"
+                       required
                        id="Password"
                 />
-            </form>
 
         </AuthPage>
     )

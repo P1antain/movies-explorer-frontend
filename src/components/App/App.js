@@ -21,7 +21,7 @@ function App() {
             </Route>
             <Route path="/movies">
                 <Header ifLoginIn={true}/>
-                <Movies/>
+                <Movies ifMovies={true}/>
                 <Footer/>
             </Route>
             <Route path="/saved-movies">

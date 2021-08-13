@@ -3,11 +3,13 @@ import "./Movies.css"
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function Movies(){
+function Movies({ifMovies}){
     return(
         <div className="movies">
             <SearchForm/>
-            <MoviesCardList/>
+            <MoviesCardList
+            ifMovies={ifMovies}
+            />
         </div>
     )
 }

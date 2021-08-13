@@ -3,6 +3,8 @@ import AuthPage from "../AuthPage/AuthPage";
 import '../AuthPage/Auth.css'
 
 function Register(){
+
+    // const { name, email, password } = values;
     return(
         <AuthPage
             title="Добро пожаловать!"
@@ -12,27 +14,27 @@ function Register(){
             path='/signin'
             ifLognin={true}
         >
-            <form  className="auth">
                 <label htmlFor="Name" className="auth__about">Name</label>
                 <input type="text"
                        className="auth__input"
                        placeholder="Ваше имя"
+                       required
                        id="Name"
                 />
                 <label htmlFor="Email" className="auth__about">E-mail</label>
-                <input type="text"
+                <input type="email"
                        className="auth__input"
                        placeholder="Ваш email"
+                       required
                        id="Email"
                 />
                 <label htmlFor="Password" className="auth__about">Password</label>
-                <input type="text"
+                <input type="password"
                        className="auth__input"
                        placeholder="Ваш password"
+                       required
                        id="Password"
                 />
-            </form>
-
         </AuthPage>
     )
 }

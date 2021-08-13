@@ -6,22 +6,6 @@ import accountImage from "../../images/accountImage.svg";
 function HeaderAuthorized({isBurgerOpen, openBurger}){
     return(
         <div className="headerAuthorized">
-            {/*<div className="header__elements">*/}
-            {/*    <NavLink*/}
-            {/*        className="header__link"*/}
-            {/*        activeClassName="header__link_active"*/}
-            {/*        to="/movies"*/}
-            {/*    >*/}
-            {/*        Фильмы*/}
-            {/*    </NavLink>*/}
-            {/*    <NavLink*/}
-            {/*        className="header__link"*/}
-            {/*        activeClassName="header__link_active"*/}
-            {/*        to="/saved-movies"*/}
-            {/*    >*/}
-            {/*        Сохраненные фильмы*/}
-            {/*    </NavLink>*/}
-            {/*</div>*/}
             <div className="header__account">
                 <NavLink to="/profile" className="header__name">Аккаунт</NavLink>
                 <img src={accountImage} alt="Account" className="header__image"/>

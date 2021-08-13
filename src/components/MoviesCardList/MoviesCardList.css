@@ -3,9 +3,16 @@
     margin: 0;
     list-style-type: none;
 }
-.helpButton{
-    position: absolute;
-    left: 50%;
+.moviesCardList__btn{
+    width: 320px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    border: 2px solid #E8E8E8;
+    border-radius: 5px;
+    background: none;
+    padding: 10px 0;
+    margin: 50px auto 80px;
 }
 @media all and (max-width: 1279px){
     .moviesCardList {
@@ -15,5 +22,8 @@
 @media all and (max-width: 767px){
     .moviesCardList {
         padding: 40px 10px 20px;
+    }
+    .moviesCardList__btn{
+        width: 240px;
     }
 }

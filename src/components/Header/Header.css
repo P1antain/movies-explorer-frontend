@@ -2,7 +2,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #F3C1F8;
     padding: 18px 70px;
+}
+.header__wrapper_authorization{
+    background: none;
 }
 .header__logo{
     width: 38px;

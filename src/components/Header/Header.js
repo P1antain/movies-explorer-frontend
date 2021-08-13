@@ -4,7 +4,6 @@ import './Header.css'
 import Logo from "../Logo/Logo";
 import { Link, NavLink } from "react-router-dom";
 import HeaderAuthorized from "../HeaderAuthorized/HeaderAuthorized";
-import HeaderCenter from "../HeaderCenter/HeaderCenter";
 
 
 function Header({ifLoginIn}){
@@ -14,7 +13,7 @@ function Header({ifLoginIn}){
     }
     return(
         <header className="header">
-            <div className="header__wrapper">
+            <div className={`header__wrapper ${ifLoginIn ? 'header__wrapper_authorization' : ''}`}>
                 <Logo/>
                 <div className="header__elements">
                     <NavLink

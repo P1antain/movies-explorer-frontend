@@ -26,3 +26,12 @@
 .auth__input:last-child{
     margin-bottom:0;
 }
+.auth__input:valid{
+    border-bottom: 2px solid green;
+}
+.auth__input:invalid{
+    border-bottom: 2px solid red;
+}
+.auth__input:focus{
+   border: none;
+}

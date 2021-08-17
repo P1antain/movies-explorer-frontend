@@ -1,63 +1,62 @@
 .filterCheckbox {
-    padding: 0 10px 0 29px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 0 10px 0 29px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .filterCheckbox__title {
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 18px;
-    margin: 0 0 0 12px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0 0 0 12px;
 }
 
 .filterCheckbox__input {
-    appearance: none;
-    border-radius: 20px;
-    border: none;
-    background-color: #ff0000;
-    outline: none;
-    cursor: pointer;
-    position: relative;
-    height: 14px;
-    width: 34px;
+  appearance: none;
+  border-radius: 20px;
+  border: none;
+  background-color: #ff0000;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  height: 14px;
+  width: 34px;
 }
 
 .filterCheckbox__input:checked {
-    background-color: #2be080;
+  background-color: #2be080;
 }
 
 .filterCheckbox__input::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 4px;
-    width: 10px;
-    height: 10px;
-    background-color: #f5f5f5;
-    border-radius: 50%;
-    transition: transform 0.3s ease-in-out;
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  width: 10px;
+  height: 10px;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out;
 }
 
 .filterCheckbox__input:checked::before {
-    transform: translateX(16px);
-    background-color: #FFFFFF;
+  transform: translateX(16px);
+  background-color: #ffffff;
 }
 @media screen and (max-width: 1279px) {
-    .filterCheckbox {
-        padding: 0 0 0 19px;
-    }
+  .filterCheckbox {
+    padding: 0 0 0 19px;
+  }
 }
 @media screen and (max-width: 767px) {
-    .filterCheckbox {
-        padding: 24px 0 0;
-    }
-    .filterCheckbox {
-        padding: 24px 0 0;
-    }
-    .filterCheckbox__title {
-        font-size: 11px;
-        line-height: 18px;
-    }
+  .filterCheckbox {
+    padding: 24px 0 0;
+  }
+  .filterCheckbox {
+    padding: 24px 0 0;
+  }
+  .filterCheckbox__title {
+    font-size: 11px;
+    line-height: 18px;
+  }
 }
-

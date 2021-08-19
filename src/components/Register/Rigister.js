@@ -6,7 +6,7 @@ import "../AuthPage/Auth.css";
 import {schemaRegister} from '../../utils/Constants'
 
 
-function Register({ onRegister }) {
+function Register({ onRegister, inError }) {
 
   const {
     register,
@@ -16,9 +16,9 @@ function Register({ onRegister }) {
     resolver: yupResolver(schemaRegister),
     mode: "onChange",
   });
-
   const onSubmit = (data) => {
     onRegister(data);
+    console.log(data)
   };
   return (
     <AuthPage
@@ -66,7 +66,7 @@ function Register({ onRegister }) {
           {...register("password")}
         />
         <span className="authPage__error">{errors.password?.message}</span>
-        <span className="authPage__error">Ошибка 500 сервера</span>
+        <span className="authPage__error">{inError}</span>
         <button className={`authPage__btn ${isValid? 'authPage__btn_disable' : ''}`} type="submit" disabled={!isValid}>
           Регистрация
         </button>

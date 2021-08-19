@@ -35,6 +35,10 @@
   border: none;
   outline: none;
 }
+.profile__info:focus{
+  border: 1px solid #2be080;
+  border-radius: 5px;
+}
 .profile__edit {
   margin-top: 220px;
   border: none;

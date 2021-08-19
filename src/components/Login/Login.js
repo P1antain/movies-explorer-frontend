@@ -5,7 +5,7 @@ import AuthPage from "../AuthPage/AuthPage";
 import "../AuthPage/Auth.css";
 import {schemaLogin} from '../../utils/Constants'
 
-function Login({onLogin}) {
+function Login({ onLogin }) {
   const {
     register,
     handleSubmit,
@@ -16,6 +16,7 @@ function Login({onLogin}) {
   });
   const onSubmit = (data) => {
     onLogin(data);
+    console.log(data)
   };
   return (
     <AuthPage
@@ -59,8 +60,6 @@ function Login({onLogin}) {
           Войти
         </button>
         </form>
-
-
     </AuthPage>
   )
 }

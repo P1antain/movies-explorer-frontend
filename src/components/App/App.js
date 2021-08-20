@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
@@ -19,58 +19,57 @@ function App() {
   const [inError, setError] = React.useState("");
   const history = useHistory();
 
-  useEffect(() =>{
-    checkToken()
-  }, [])
-
-  const handleResponse = (res) => {
-    localStorage.setItem("jwt", res.token);
+  const handleResponse = (data) => {
+    const { jwt } = data;
+    localStorage.setItem("jwt", jwt);
+    setCurrentUser(data);
     setLoggedIn(true);
     history.push("/movies");
   };
-  function onRegister(data) {
+  const onRegister = (data) => {
     mainApi
       .register(data.name, data.email, data.password)
       .then(handleResponse)
       .catch(() => {
         setError("Ошибка при регистрации");
       });
-  }
-  function onLogin(data) {
+  };
+  const onLogin = (data) => {
     mainApi
       .login(data.email, data.password)
       .then(handleResponse)
       .catch(() => {
         setError("Ошибка при регистрации");
       });
-  }
+  };
   const checkToken = () => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      mainApi
-          .getContent(jwt)
-          .then((data) => {
-            setCurrentUser(data)
-            setLoggedIn(true)
-            history.push('/movies')
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+    if (localStorage.getItem("jwt")) {
+      setLoggedIn(true);
+      history.push("/profile");
     }
-  }
-  function handleLogOut(){
+  };
+  const getData = () => {
     mainApi
-        .endSession()
-        .then(()=>{
-          console.log('heeeelloo')
-        })
-        .catch((err)=>
-        {
-          console.log(err)
-        })
-    // localStorage.clear()
-    // history.push('/')
+      .getContent()
+      .then((data) => {
+        setCurrentUser(data);
+      })
+      .catch((err) => console.log(err));
+  };
+  React.useEffect(() => {
+    checkToken();
+    if(loggedIn) {
+      getData()
+    }
+  }, [loggedIn]);
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    history.push("/");
+  };
+
+  const onEdit = () => {
+    console.log('hi')
   }
 
   return (
@@ -99,9 +98,10 @@ function App() {
             loggedIn={loggedIn}
             currentUser={currentUser}
             exitSession={handleLogOut}
+            onEdit={onEdit}
           />
           <Route path="/signin">
-            <Login onLogin={onLogin} />
+            <Login onLogin={onLogin} inError={inError} />
           </Route>
           <Route path="/signup">
             <Register onRegister={onRegister} inError={inError} />

@@ -5,7 +5,7 @@ import AuthPage from "../AuthPage/AuthPage";
 import "../AuthPage/Auth.css";
 import {schemaLogin} from '../../utils/Constants'
 
-function Login({ onLogin }) {
+function Login({ onLogin, inError}) {
   const {
     register,
     handleSubmit,
@@ -54,7 +54,7 @@ function Login({ onLogin }) {
         <span className="authPage__error">{errors.password?.message}</span>
 
         <span className="authPage__error">
-          Что-то пошло не так...
+          {inError}
         </span>
         <button className={`authPage__btn ${isValid? 'authPage__btn_disable' : ''}`} type="submit" disabled={!isValid}>
           Войти

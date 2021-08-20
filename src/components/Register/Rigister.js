@@ -36,7 +36,7 @@ function Register({ onRegister, inError }) {
         <input
           type="name"
           className="auth__input"
-          placeholder="Ваш email"
+          placeholder="Ваше name"
           id="Name"
           {...register("name")}
         />

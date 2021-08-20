@@ -8,9 +8,11 @@ class MainApi {
     }
     return res.json();
   }
+
   register(name, email, password) {
     return fetch(`${this._url}/signup`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -21,9 +23,11 @@ class MainApi {
       }),
     }).then(this._checkResponse);
   }
+
   login(email, password) {
     return fetch(`${this._url}/signin`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -33,12 +37,12 @@ class MainApi {
       }),
     }).then(this._checkResponse);
   }
-  getContent(token) {
+  getContent() {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
       },
     }).then(this._checkResponse);
   }
@@ -53,8 +57,9 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: "http://p1antain.api.nomoredomains.club",
-  // url: "http://localhost:3000",
+
+  url: "http://localhost:3000",
+  // url: "https://p1antain.api.nomoredomains.club",
 });
 
 export default mainApi;

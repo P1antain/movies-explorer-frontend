@@ -45,6 +45,15 @@
 .searchForm__button:hover {
   opacity: 0.6;
 }
+.searchForm__error {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #ff4062;
+  padding-top: 10px;
+  margin: 0;
+}
 @media all and (max-width: 1279px) {
   .searchForm {
     padding: 70px 30px 10px;
@@ -61,7 +70,7 @@
     border-left: 1px solid #cbcbcb;
   }
   .searchForm__helper {
-    display: none;
+    /*display: none;*/
   }
 }
 @media all and (max-width: 767px) {

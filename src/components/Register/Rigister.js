@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AuthPage from "../AuthPage/AuthPage";
 import "../AuthPage/Auth.css";
-import {schemaRegister} from '../../utils/Constants'
+import { schemaSearch } from '../../utils/Constants'
 
 
 function Register({ onRegister, inError }) {
@@ -13,7 +13,7 @@ function Register({ onRegister, inError }) {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    resolver: yupResolver(schemaRegister),
+    resolver: yupResolver(schemaSearch),
     mode: "onChange",
   });
   const onSubmit = (data) => {
@@ -36,10 +36,13 @@ function Register({ onRegister, inError }) {
         <input
           type="name"
           className="auth__input"
-          placeholder="Ваш email"
+          placeholder="Ваше name"
           id="Name"
-          {...register("name")}
+          {...register("name",
+              {required:true})
+          }
         />
+
         <span className="authPage__error">{errors.name?.message}</span>
 
         <label htmlFor="Email" className="auth__about">

@@ -11,8 +11,17 @@
   border: 2px solid #e8e8e8;
   border-radius: 5px;
   background: none;
+  cursor: pointer;
   padding: 10px 0;
   margin: 50px auto 80px;
+}
+.moviesCardList__error{
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ff4062;
+  text-align: center;
+  margin: 0 auto;
 }
 @media all and (max-width: 1279px) {
   .moviesCardList {

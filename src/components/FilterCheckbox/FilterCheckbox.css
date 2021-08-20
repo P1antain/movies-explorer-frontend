@@ -1,5 +1,6 @@
 .filterCheckbox {
-  padding: 0 10px 0 29px;
+  /*padding: 0 10px 0 29px;*/
+  padding: 24px 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,11 +44,11 @@
   transform: translateX(16px);
   background-color: #ffffff;
 }
-@media screen and (max-width: 1279px) {
-  .filterCheckbox {
-    padding: 0 0 0 19px;
-  }
-}
+/*@media screen and (max-width: 1279px) {*/
+/*  .filterCheckbox {*/
+/*    padding: 0 0 0 19px;*/
+/*  }*/
+/*}*/
 @media screen and (max-width: 767px) {
   .filterCheckbox {
     padding: 24px 0 0;

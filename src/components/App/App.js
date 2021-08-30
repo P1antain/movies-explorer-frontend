@@ -21,9 +21,8 @@ function App() {
   const [inErrorSearch, setErrorSearch] = React.useState(false);
   const [inMovies, setMovies] = React.useState([]);
   const [inSearch, setSearch] = React.useState([]);
-  const [inRender, setRender] = React.useState([]);
   const [inResult, setResult] = React.useState([]);
-  const [inResultRemainder, setResultRemainder] = React.useState([]);
+  const [inSavedMovies, setSavedMovies] = React.useState([])
   const [inClickCard, setClickCard] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [inError, setError] = React.useState("");
@@ -137,8 +136,9 @@ function App() {
       setWindowWidth(window.innerWidth);
     };
     window.addEventListener("resize", changeOnResize);
+    changeOnResize();
     return () => window.removeEventListener("resize", changeOnResize);
-  });
+  }, [inSearch]);
 
   const calculate = (inWindowWidth) => {
     let startNumber, addNumber;
@@ -158,25 +158,29 @@ function App() {
   const handleAddCard = () => {
     if (inClickCard) {
       setClickCard(false);
-    } else {
-      setClickCard(true);
+      const { addNumber } = calculate(inWindowWidth);
+      const splicedRender = inSearch.splice(0, addNumber);
+      inResult.push(...splicedRender);
     }
   };
-
   React.useEffect(() => {
-    const { startNumber, addNumber } = calculate(inWindowWidth);
-    // const splicedRender = inResultRemainder.splice(0, addNumber);
-    console.log(inSearch)
-    // setResult(splicedRender)
+    setClickCard(true)
   }, [inClickCard]);
 
   React.useEffect(() => {
-    const { startNumber, addNumber } = calculate(inWindowWidth);
-    const searchArr = inSearch;
+    const { startNumber } = calculate(inWindowWidth);
     const splicedSearch = inSearch.splice(0, startNumber);
     setResult(splicedSearch);
-    setResultRemainder(searchArr);
   }, [inSearch]);
+
+  const handleLikeCard =  (data) =>{
+    mainApi.saveMovies(data)
+        .then((movies)=>{
+          console.log(inSavedMovies)
+          const save = [movies, ...inSavedMovies]
+          setSavedMovies(save)
+        })
+  }
 
   return (
     <div className="page">
@@ -193,11 +197,14 @@ function App() {
             loggedIn={loggedIn}
             ifMovies={true}
             inResult={inResult}
+            inSearch={inSearch}
             handleAddCard={handleAddCard}
             onSearch={onSearch}
             isPreloader={isPreloader}
             inErrorMoviesApi={inErrorMoviesApi}
             inErrorSearch={inErrorSearch}
+            handleLikeCard={handleLikeCard}
+            inSavedMovies={inSavedMovies}
           />
           <ProtectedRoute
             path="/saved-movies"
@@ -206,6 +213,7 @@ function App() {
             isPreloader={isPreloader}
             inErrorMoviesApi={inErrorMoviesApi}
             inErrorSearch={inErrorSearch}
+            inSavedMovies={inSavedMovies}
           />
           <ProtectedRoute
             path="/profile"

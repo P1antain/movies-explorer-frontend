@@ -8,6 +8,8 @@ function MoviesCardList({
   inErrorMoviesApi,
   inErrorSearch,
   handleAddCard,
+  inSearch,
+  handleLikeCard,
 }) {
   return (
     <>
@@ -20,7 +22,13 @@ function MoviesCardList({
       ) : (
         <ul className="moviesCardList">
           {inResult.map((card) => {
-            return <MoviesCard card={card} key={card.id} />;
+            return (
+              <MoviesCard
+                card={card}
+                key={card.id}
+                handleLikeCard={handleLikeCard}
+              />
+            );
           })}
         </ul>
       )}
@@ -31,7 +39,7 @@ function MoviesCardList({
       ) : (
         ""
       )}
-      {ifMovies && (
+      {ifMovies && inSearch.length > 0 && (
         <button className="moviesCardList__btn" onClick={handleAddCard}>
           Еще
         </button>

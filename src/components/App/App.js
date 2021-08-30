@@ -22,7 +22,8 @@ function App() {
   const [inMovies, setMovies] = React.useState([]);
   const [inSearch, setSearch] = React.useState([]);
   const [inResult, setResult] = React.useState([]);
-  const [inSavedMovies, setSavedMovies] = React.useState([])
+  const [inSavedMovies, setSavedMovies] = React.useState([]);
+  const [inDataMovies, setDataMovies] = React.useState([]);
   const [inClickCard, setClickCard] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [inError, setError] = React.useState("");
@@ -70,12 +71,30 @@ function App() {
     checkToken();
     if (loggedIn) {
       getData();
+      getUserMovies();
     }
     if (loggedIn) {
       return moviesApi
         .getMovies()
         .then((data) => {
-          setMovies(data);
+          const BASEURL = "https://api.nomoreparties.co";
+          const saveCorrect = data.map((item) => {
+            return {
+              ...item,
+              country: item.country,
+              director: item.director,
+              duration: item.duration,
+              year: item.year,
+              description: item.description,
+              image: `${BASEURL}${item.image.url}`,
+              trailer: item.trailerLink,
+              nameRU: item.nameRU,
+              nameEN: item.nameEN,
+              thumbnail: `${BASEURL}${item.image.formats.thumbnail.url}`,
+              movieId: item.id,
+            };
+          });
+          setMovies(saveCorrect);
           setErrorMoviesApi(false);
         })
         .catch((err) => {
@@ -164,23 +183,47 @@ function App() {
     }
   };
   React.useEffect(() => {
-    setClickCard(true)
+    setClickCard(true);
   }, [inClickCard]);
 
   React.useEffect(() => {
+    console.log(inResult);
     const { startNumber } = calculate(inWindowWidth);
     const splicedSearch = inSearch.splice(0, startNumber);
     setResult(splicedSearch);
   }, [inSearch]);
 
-  const handleLikeCard =  (data) =>{
-    mainApi.saveMovies(data)
-        .then((movies)=>{
-          console.log(inSavedMovies)
-          const save = [movies, ...inSavedMovies]
-          setSavedMovies(save)
-        })
-  }
+  const handleLikeCard = (data) => {
+    return mainApi.saveMovies(data).then((movies) => {
+      const save = [movies, ...inSavedMovies];
+      setSavedMovies(save);
+    }).catch((err) =>{
+      console.log(err)
+    })
+        ;
+  };
+
+  // const handleDeleteCard = (data) => {
+  //   return mainApi.deleteMovie(data)
+  //       .then((data)=>{
+  //         console.log(data)
+  //       })
+  //       .catch((err)=>{
+  //         console.log(err)
+  //       });
+  // };
+
+  const getUserMovies = () => {
+    return mainApi
+      .getMovies()
+      .then((data) => {
+        setDataMovies(data);
+        localStorage.setItem("savedMovies", JSON.stringify(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="page">
@@ -209,10 +252,23 @@ function App() {
           <ProtectedRoute
             path="/saved-movies"
             component={Movies}
+            inDataMovies={inDataMovies}
+            // loggedIn={loggedIn}
+            // isPreloader={isPreloader}
+            // inErrorMoviesApi={inErrorMoviesApi}
+            // inErrorSearch={inErrorSearch}
+            // inSavedMovies={inSavedMovies}
+
             loggedIn={loggedIn}
+            ifMovies={true}
+            inResult={inResult}
+            inSearch={inSearch}
+            handleAddCard={handleAddCard}
+            onSearch={onSearch}
             isPreloader={isPreloader}
             inErrorMoviesApi={inErrorMoviesApi}
             inErrorSearch={inErrorSearch}
+            handleLikeCard={handleLikeCard}
             inSavedMovies={inSavedMovies}
           />
           <ProtectedRoute

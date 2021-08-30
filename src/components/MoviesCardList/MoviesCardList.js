@@ -10,28 +10,42 @@ function MoviesCardList({
   handleAddCard,
   inSearch,
   handleLikeCard,
+  inSavedMovies,
+  inDataMovies,
 }) {
   return (
     <>
       {" "}
-      {inErrorMoviesApi ? (
+      {inErrorMoviesApi && (
         <p className="moviesCardList__error">
           Во время запроса произошла ошибка. Возможно, проблема с соединением
           или сервер недоступен. Подождите немного и попробуйте ещё раз
         </p>
-      ) : (
-        <ul className="moviesCardList">
-          {inResult.map((card) => {
-            return (
-              <MoviesCard
-                card={card}
-                key={card.id}
-                handleLikeCard={handleLikeCard}
-              />
-            );
-          })}
-        </ul>
       )}
+        <ul className="moviesCardList">
+
+            {inResult.map((card) => {
+                return (
+                    <MoviesCard
+                        card={card}
+                        key={card.id}
+                        handleLikeCard={handleLikeCard}
+                        inSavedMovies={inSavedMovies}
+                    />
+                );
+            })}
+              {inDataMovies.map((card) => {
+                return (
+                  <MoviesCard
+                    card={card}
+                    key={card.id}
+                    handleLikeCard={handleLikeCard}
+                    inSavedMovies={inSavedMovies}
+                  />
+                );
+              })}
+        </ul>
+
       {inErrorSearch ? (
         <p className="moviesCardList__error">
           Ничего не найдено, попробуйте другое название

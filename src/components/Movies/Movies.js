@@ -18,6 +18,7 @@ function Movies({
   inSearch,
   handleLikeCard,
   inSavedMovies,
+  inDataMovies,
 }) {
   return (
     <>
@@ -36,6 +37,7 @@ function Movies({
             inSearch={inSearch}
             handleLikeCard={handleLikeCard}
             inSavedMovies={inSavedMovies}
+            inDataMovies={inDataMovies}
           />
         )}
       </div>

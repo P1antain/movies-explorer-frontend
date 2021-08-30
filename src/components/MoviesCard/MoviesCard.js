@@ -2,10 +2,8 @@ import React from "react";
 import "./MoviesCard.css";
 import { Route } from "react-router-dom";
 
-function MoviesCard({ card, handleLikeCard }) {
-  const { duration, image, trailerLink } = card;
-
-  const BASEURL = "https://api.nomoreparties.co";
+function MoviesCard({ card, handleLikeCard, inSavedMovies }) {
+  const { duration, image, trailerLink, movieId } = card;
 
   const handleOpenTrailer = () => {
     window.open(trailerLink);
@@ -18,22 +16,31 @@ function MoviesCard({ card, handleLikeCard }) {
     }
     return hours + "h " + minutes + "min";
   };
+  const isLiked = inSavedMovies.find((i) => i.movieId === movieId);
 
-
+  const onClick = () =>{
+    handleLikeCard(card)
+  }
   return (
     <li className="moviesCard">
       <div className="moviesCard__about">
         <h2 className="moviesCard__name">{card.nameRU || card.nameEN}</h2>
         <p className="moviesCard__time">{timeDuration(duration)}</p>
         <Route path="/movies">
-          <button type="button" className={`moviesCard__like ${'' ? "moviesCard__time_active" : ""}`} onClick={handleLikeCard}/>
+          <button
+            type="button"
+            className={`moviesCard__like ${
+              isLiked ? "moviesCard__time_active" : ""
+            }`}
+            onClick={onClick}
+          />
         </Route>
         <Route path="/saved-movies">
           <button type="button" className="moviesCard__del" />
         </Route>
       </div>
       <img
-        src={BASEURL + image.url}
+        src={image}
         alt="Фото фильма"
         className="moviesCard__photo"
         onClick={handleOpenTrailer}

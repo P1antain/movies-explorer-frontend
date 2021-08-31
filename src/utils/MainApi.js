@@ -45,7 +45,7 @@ class MainApi {
       },
     }).then(this._checkResponse);
   }
-  getMovies(){
+  getMovies() {
     return fetch(`${this._url}/movies`, {
       method: "GET",
       credentials: "include",
@@ -70,23 +70,11 @@ class MainApi {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     }).then(this._checkResponse);
   }
 
-  saveMovies({
-               movieId,
-               country,
-               director,
-               duration,
-               year,
-               description,
-               image,
-               trailer,
-               nameRU,
-               nameEN,
-               thumbnail,
-             }){
+  saveMovies(data) {
     return fetch(`${this._url}/movies`, {
       method: "POST",
       credentials: "include",
@@ -94,17 +82,17 @@ class MainApi {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        movieId,
-        country,
-        director,
-        duration,
-        year,
-        description,
-        image,
-        trailer,
-        nameRU,
-        nameEN,
-        thumbnail,
+        movieId: data.id,
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: data.image,
+        trailer: data.trailer,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+        thumbnail: data.thumbnail,
       }),
     }).then(this._checkResponse);
   }

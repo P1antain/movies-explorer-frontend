@@ -66,25 +66,32 @@ function App() {
       })
       .catch((err) => console.log(err));
   };
-  const getUserMovies = (data) => {
+  const getUserMovies = () => {
     return mainApi
-      .getMovies(data)
+      .getMovies()
       .then((data) => {
-        setDataMovies(data);
         setSavedMovies(data);
+        setDataMovies(data);
         localStorage.setItem("savedMovies", JSON.stringify(data));
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  React.useEffect(() => {
+    const getAllContent = async () => {
+      if (loggedIn) {
+        await getData();
+      }
+      if (loggedIn) {
+        await getUserMovies();
+      }
+    };
+    getAllContent();
+  }, [loggedIn]);
 
   React.useEffect(() => {
     checkToken();
-    if (loggedIn) {
-      getData();
-      getUserMovies()
-    }
     if (loggedIn && localStorage.getItem("searchMovies")) {
       setSearch(JSON.parse(localStorage.getItem("searchMovies")));
     }
@@ -225,17 +232,18 @@ function App() {
     );
     if (item.length !== 0) {
       handleDeleteCard(item[0]);
-    } else{
+    } else {
       mainApi
-          .saveMovies(data)
-          .then((movie) => {
-            const result = [movie, ...inSavedMovies];
-            setSavedMovies(result);
-            setDataMovies(result);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        .saveMovies(data)
+        .then((movie) => {
+          const result = [movie, ...inSavedMovies];
+          setSavedMovies(result);
+          setDataMovies(result);
+          getUserMovies()
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -248,14 +256,16 @@ function App() {
         );
         setSavedMovies(result);
         setDataMovies(result);
+        getUserMovies()
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  React.useEffect(()=>{
 
 
-
+  }, [])
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>

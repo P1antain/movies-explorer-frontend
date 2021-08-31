@@ -15,9 +15,6 @@ function MoviesCardList({
   handleDeleteCard,
   inSavedMovies,
 }) {
-React.useEffect(()=>{
-
-}, [handleLikeCard, handleDeleteCard])
 
   return (
     <>

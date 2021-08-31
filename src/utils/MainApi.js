@@ -74,7 +74,19 @@ class MainApi {
     }).then(this._checkResponse);
   }
 
-  saveMovies(data) {
+  saveMovies({
+    movieId,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    nameRU,
+    nameEN,
+    thumbnail,
+  }) {
     return fetch(`${this._url}/movies`, {
       method: "POST",
       credentials: "include",
@@ -82,17 +94,17 @@ class MainApi {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        movieId: data.id,
-        country: data.country,
-        director: data.director,
-        duration: data.duration,
-        year: data.year,
-        description: data.description,
-        image: data.image,
-        trailer: data.trailer,
-        nameRU: data.nameRU,
-        nameEN: data.nameEN,
-        thumbnail: data.thumbnail,
+        movieId,
+        country,
+        director,
+        duration,
+        year,
+        description,
+        image,
+        trailer,
+        nameRU,
+        nameEN,
+        thumbnail,
       }),
     }).then(this._checkResponse);
   }

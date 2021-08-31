@@ -26,7 +26,10 @@ function Movies({
     <>
       <Header ifLoginIn={true} />
       <div className="movies">
-        <SearchForm onSearch={onSearch} isCheckbox={isCheckbox} />
+        <SearchForm
+          onSearch={onSearch}
+          isCheckbox={isCheckbox}
+        />
         {isPreloader ? (
           <Preloader />
         ) : (

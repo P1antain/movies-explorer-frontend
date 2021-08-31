@@ -37,7 +37,7 @@ function App() {
     history.push("/movies");
   };
   const onRegister = (data) => {
-    console.log(data)
+    console.log(data);
     mainApi
       .register(data.name, data.email, data.password)
       .then(handleResponse)
@@ -121,6 +121,7 @@ function App() {
             };
           });
           setMovies(saveCorrect);
+
           setErrorMoviesApi(false);
         })
         .catch((err) => {
@@ -184,6 +185,15 @@ function App() {
       setPreloader(false);
     }, 500);
   };
+
+  const onSearchSaved = (data) =>{
+    const filterSave = inDataMovies.filter((movie) => {
+      return movie.nameRU.toLowerCase().includes(data.search.toLowerCase());
+    });
+    setDataMovies(filterSave)
+    console.log(filterSave)
+  }
+
   // Получаем размер экрана
   React.useEffect(() => {
     const changeOnResize = () => {
@@ -227,6 +237,7 @@ function App() {
     setResult(splicedSearch);
   }, [inSearch]);
 
+
   const handleLikeCard = (data) => {
     const item = inSavedMovies.filter(
       (i) => i.movieId === data.movieId || i.movieId === data.id
@@ -240,8 +251,7 @@ function App() {
           const result = [movie, ...inSavedMovies];
           setSavedMovies(result);
           setDataMovies(result);
-          getUserMovies()
-
+          getUserMovies();
         })
         .catch((err) => {
           console.log(err);
@@ -258,19 +268,16 @@ function App() {
         );
         setSavedMovies(result);
         setDataMovies(result);
-        getUserMovies()
-        if(inDataMovies.length===1){
-          history.go(0)
+        getUserMovies();
+        if (inDataMovies.length === 1) {
+          history.go(0);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  React.useEffect(()=>{
 
-
-  }, [])
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -303,7 +310,7 @@ function App() {
             loggedIn={loggedIn}
             inResult={inResult}
             inSearch={inSearch}
-            onSearch={onSearch}
+            onSearch={onSearchSaved}
             isPreloader={isPreloader}
             inErrorMoviesApi={inErrorMoviesApi}
             inErrorSearch={inErrorSearch}

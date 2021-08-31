@@ -45,6 +45,15 @@ class MainApi {
       },
     }).then(this._checkResponse);
   }
+  getMovies(){
+    return fetch(`${this._url}/movies`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(this._checkResponse);
+  }
   endSession() {
     return fetch(`${this._url}/signout`, {
       method: "GET",
@@ -64,15 +73,7 @@ class MainApi {
       body: JSON.stringify(data)
     }).then(this._checkResponse);
   }
-  getMovies(){
-    return fetch(`${this._url}/movies`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(this._checkResponse);
-  }
+
   saveMovies({
                movieId,
                country,

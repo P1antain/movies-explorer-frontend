@@ -1,7 +1,7 @@
 import React from "react";
 import "./FilterCheckbox.css";
 
-function FilterCheckbox({register}) {
+function FilterCheckbox({ register }) {
   return (
     <div className="filterCheckbox">
       <input
@@ -9,7 +9,7 @@ function FilterCheckbox({register}) {
         className="filterCheckbox__input"
         id="filter"
         value={true}
-        {...register('checkbox')}
+        {...register("checkbox")}
       />
       <label className="filterCheckbox__title" htmlFor="filter">
         Короткометражки

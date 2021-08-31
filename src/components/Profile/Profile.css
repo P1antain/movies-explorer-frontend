@@ -11,7 +11,7 @@
   padding-top: 74px;
   margin: 0;
 }
-.profile__form{
+.profile__form {
   text-align: center;
 }
 .profile__more {
@@ -39,11 +39,11 @@
   border: none;
   outline: none;
 }
-.profile__info:focus{
+.profile__info:focus {
   border: 1px solid #2be080;
   border-radius: 5px;
 }
-.profile__error{
+.profile__error {
   width: 100%;
   font-weight: normal;
   font-size: 10px;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import "./Profile.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -12,7 +12,7 @@ function Profile({ exitSession, onEdit }) {
   const {
     register,
     handleSubmit,
-    formState: { isValid, isDirty, errors },
+    formState: { isValid, errors },
   } = useForm({
     resolver: yupResolver(schemaEdit),
     mode: "onChange",
@@ -54,10 +54,7 @@ function Profile({ exitSession, onEdit }) {
           </button>
         </form>
 
-        <button
-          className="profile__exit"
-          onClick={handleLogOut}
-        >
+        <button className="profile__exit" onClick={handleLogOut}>
           Выйти из аккаунта
         </button>
       </div>

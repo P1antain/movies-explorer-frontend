@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AuthPage from "../AuthPage/AuthPage";
 import "../AuthPage/Auth.css";
-import {schemaLogin} from '../../utils/Constants'
+import { schemaLogin } from "../../utils/Constants";
 
-function Login({ onLogin, inError}) {
+function Login({ onLogin, inError }) {
   const {
     register,
     handleSubmit,
@@ -16,7 +16,7 @@ function Login({ onLogin, inError}) {
   });
   const onSubmit = (data) => {
     onLogin(data);
-    console.log(data)
+    console.log(data);
   };
   return (
     <AuthPage
@@ -32,12 +32,12 @@ function Login({ onLogin, inError}) {
           E-mail
         </label>
         <input
-            type="email"
-            className="auth__input"
-            placeholder="Ваш email"
-            required
-            id="Email"
-            {...register("email")}
+          type="email"
+          className="auth__input"
+          placeholder="Ваш email"
+          required
+          id="Email"
+          {...register("email")}
         />
         <span className="authPage__error">{errors.email?.message}</span>
 
@@ -45,23 +45,25 @@ function Login({ onLogin, inError}) {
           Password
         </label>
         <input
-            type="password"
-            className="auth__input"
-            placeholder="Ваш password"
-            required
-            {...register("password")}
+          type="password"
+          className="auth__input"
+          placeholder="Ваш password"
+          required
+          {...register("password")}
         />
         <span className="authPage__error">{errors.password?.message}</span>
 
-        <span className="authPage__error">
-          {inError}
-        </span>
-        <button className={`authPage__btn ${isValid? 'authPage__btn_disable' : ''}`} type="submit" disabled={!isValid}>
+        <span className="authPage__error">{inError}</span>
+        <button
+          className={`authPage__btn ${isValid ? "authPage__btn_disable" : ""}`}
+          type="submit"
+          disabled={!isValid}
+        >
           Войти
         </button>
-        </form>
+      </form>
     </AuthPage>
-  )
+  );
 }
 
 export default Login;

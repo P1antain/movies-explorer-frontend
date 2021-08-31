@@ -3,11 +3,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AuthPage from "../AuthPage/AuthPage";
 import "../AuthPage/Auth.css";
-import { schemaSearch } from '../../utils/Constants'
-
+import { schemaSearch } from "../../utils/Constants";
 
 function Register({ onRegister, inError }) {
-
   const {
     register,
     handleSubmit,
@@ -18,7 +16,7 @@ function Register({ onRegister, inError }) {
   });
   const onSubmit = (data) => {
     onRegister(data);
-    console.log(data)
+    console.log(data);
   };
   return (
     <AuthPage
@@ -38,9 +36,7 @@ function Register({ onRegister, inError }) {
           className="auth__input"
           placeholder="Ваше name"
           id="Name"
-          {...register("name",
-              {required:true})
-          }
+          {...register("name", { required: true })}
         />
 
         <span className="authPage__error">{errors.name?.message}</span>
@@ -70,7 +66,11 @@ function Register({ onRegister, inError }) {
         />
         <span className="authPage__error">{errors.password?.message}</span>
         <span className="authPage__error">{inError}</span>
-        <button className={`authPage__btn ${isValid? 'authPage__btn_disable' : ''}`} type="submit" disabled={!isValid}>
+        <button
+          className={`authPage__btn ${isValid ? "authPage__btn_disable" : ""}`}
+          type="submit"
+          disabled={!isValid}
+        >
           Регистрация
         </button>
       </form>

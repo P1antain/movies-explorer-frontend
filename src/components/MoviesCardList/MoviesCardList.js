@@ -10,9 +10,15 @@ function MoviesCardList({
   handleAddCard,
   inSearch,
   handleLikeCard,
-  inSavedMovies,
   inDataMovies,
+  renderApplication,
+  handleDeleteCard,
+  inSavedMovies,
 }) {
+React.useEffect(()=>{
+
+}, [handleLikeCard, handleDeleteCard])
+
   return (
     <>
       {" "}
@@ -22,30 +28,32 @@ function MoviesCardList({
           или сервер недоступен. Подождите немного и попробуйте ещё раз
         </p>
       )}
-        <ul className="moviesCardList">
-
-            {inResult.map((card) => {
-                return (
-                    <MoviesCard
-                        card={card}
-                        key={card.id}
-                        handleLikeCard={handleLikeCard}
-                        inSavedMovies={inSavedMovies}
-                    />
-                );
-            })}
-              {inDataMovies.map((card) => {
-                return (
-                  <MoviesCard
-                    card={card}
-                    key={card.id}
-                    handleLikeCard={handleLikeCard}
-                    inSavedMovies={inSavedMovies}
-                  />
-                );
-              })}
-        </ul>
-
+      <ul className="moviesCardList">
+        {!renderApplication &&
+          inResult.map((card) => {
+            return (
+              <MoviesCard
+                card={card}
+                key={card.id}
+                handleLikeCard={handleLikeCard}
+                handleDeleteCard={handleDeleteCard}
+                inSavedMovies={inSavedMovies}
+              />
+            );
+          })}
+        {renderApplication &&
+          inDataMovies.map((card) => {
+            return (
+              <MoviesCard
+                card={card}
+                key={card._id}
+                handleLikeCard={handleLikeCard}
+                handleDeleteCard={handleDeleteCard}
+                inSavedMovies={inSavedMovies}
+              />
+            );
+          })}
+      </ul>
       {inErrorSearch ? (
         <p className="moviesCardList__error">
           Ничего не найдено, попробуйте другое название

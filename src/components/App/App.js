@@ -29,7 +29,6 @@ function App() {
   const [inError, setError] = React.useState("");
   const [inWindowWidth, setWindowWidth] = React.useState(1180);
   const history = useHistory();
-
   const handleResponse = (data) => {
     const { jwt } = data;
     localStorage.setItem("jwt", jwt);
@@ -67,11 +66,30 @@ function App() {
       })
       .catch((err) => console.log(err));
   };
+  const getUserMovies = (data) => {
+    return mainApi
+      .getMovies(data)
+      .then((data) => {
+        setDataMovies(data);
+        setSavedMovies(data);
+        localStorage.setItem("savedMovies", JSON.stringify(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   React.useEffect(() => {
     checkToken();
     if (loggedIn) {
       getData();
-      getUserMovies();
+      getUserMovies()
+    }
+    if (loggedIn && localStorage.getItem("searchMovies")) {
+      setSearch(JSON.parse(localStorage.getItem("searchMovies")));
+    }
+    if (loggedIn && JSON.parse(localStorage.getItem("searchMoviesDuration"))) {
+      setSearch(JSON.parse(localStorage.getItem("searchMoviesDuration")));
     }
     if (loggedIn) {
       return moviesApi
@@ -81,7 +99,7 @@ function App() {
           const saveCorrect = data.map((item) => {
             return {
               ...item,
-              country: item.country,
+              country: item.country ? item.country : "Data unavailable",
               director: item.director,
               duration: item.duration,
               year: item.year,
@@ -89,7 +107,7 @@ function App() {
               image: `${BASEURL}${item.image.url}`,
               trailer: item.trailerLink,
               nameRU: item.nameRU,
-              nameEN: item.nameEN,
+              nameEN: item.nameEN ? item.nameEN : "Data unavailable",
               thumbnail: `${BASEURL}${item.image.formats.thumbnail.url}`,
               movieId: item.id,
             };
@@ -106,6 +124,9 @@ function App() {
 
   const handleLogOut = () => {
     localStorage.clear();
+    localStorage.removeItem("searchMovies");
+    localStorage.removeItem("searchMoviesDuration");
+    localStorage.removeItem("jwt");
     history.push("/");
   };
 
@@ -131,6 +152,8 @@ function App() {
     });
     if (!data.checkbox) {
       setSearch(filterMoviesRU);
+      localStorage.setItem("searchMovies", JSON.stringify(filterMoviesRU));
+      localStorage.removeItem("searchMoviesDuration");
       if (filterMoviesRU.length === 0) {
         setErrorSearch(true);
       } else {
@@ -138,13 +161,17 @@ function App() {
       }
     } else {
       setSearch(filterMoviesDuration);
+      localStorage.setItem(
+        "searchMoviesDuration",
+        JSON.stringify(filterMoviesDuration)
+      );
+      localStorage.removeItem("searchMovies");
       if (filterMoviesDuration.length === 0) {
         setErrorSearch(true);
       } else {
         setErrorSearch(false);
       }
     }
-
     setTimeout(function () {
       setPreloader(false);
     }, 500);
@@ -187,43 +214,47 @@ function App() {
   }, [inClickCard]);
 
   React.useEffect(() => {
-    console.log(inResult);
     const { startNumber } = calculate(inWindowWidth);
     const splicedSearch = inSearch.splice(0, startNumber);
     setResult(splicedSearch);
   }, [inSearch]);
 
   const handleLikeCard = (data) => {
-    return mainApi.saveMovies(data).then((movies) => {
-      const save = [movies, ...inSavedMovies];
-      setSavedMovies(save);
-    }).catch((err) =>{
-      console.log(err)
-    })
-        ;
+    const item = inSavedMovies.filter(
+      (i) => i.movieId === data.movieId || i.movieId === data.id
+    );
+    if (item.length !== 0) {
+      handleDeleteCard(item[0]);
+    } else{
+      mainApi
+          .saveMovies(data)
+          .then((movie) => {
+            const result = [movie, ...inSavedMovies];
+            setSavedMovies(result);
+            setDataMovies(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
   };
 
-  // const handleDeleteCard = (data) => {
-  //   return mainApi.deleteMovie(data)
-  //       .then((data)=>{
-  //         console.log(data)
-  //       })
-  //       .catch((err)=>{
-  //         console.log(err)
-  //       });
-  // };
-
-  const getUserMovies = () => {
-    return mainApi
-      .getMovies()
-      .then((data) => {
-        setDataMovies(data);
-        localStorage.setItem("savedMovies", JSON.stringify(data));
+  const handleDeleteCard = (card) => {
+    mainApi
+      .deleteMovie(card)
+      .then((movie) => {
+        const result = inSavedMovies.filter(
+          (item) => item.movieId !== movie.id && item.movieId !== movie.movieId
+        );
+        setSavedMovies(result);
+        setDataMovies(result);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+
 
   return (
     <div className="page">
@@ -253,22 +284,16 @@ function App() {
             path="/saved-movies"
             component={Movies}
             inDataMovies={inDataMovies}
-            // loggedIn={loggedIn}
-            // isPreloader={isPreloader}
-            // inErrorMoviesApi={inErrorMoviesApi}
-            // inErrorSearch={inErrorSearch}
-            // inSavedMovies={inSavedMovies}
-
+            renderApplication
             loggedIn={loggedIn}
-            ifMovies={true}
             inResult={inResult}
             inSearch={inSearch}
-            handleAddCard={handleAddCard}
             onSearch={onSearch}
             isPreloader={isPreloader}
             inErrorMoviesApi={inErrorMoviesApi}
             inErrorSearch={inErrorSearch}
             handleLikeCard={handleLikeCard}
+            handleDeleteCard={handleDeleteCard}
             inSavedMovies={inSavedMovies}
           />
           <ProtectedRoute

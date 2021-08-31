@@ -2,12 +2,17 @@ import React from "react";
 import "./MoviesCard.css";
 import { Route } from "react-router-dom";
 
-function MoviesCard({ card, handleLikeCard, inSavedMovies }) {
-  const { duration, image, trailerLink, movieId } = card;
-
+function MoviesCard({
+  card,
+  handleLikeCard,
+  handleDeleteCard,
+  inSavedMovies,
+}) {
+  const { duration, image, trailerLink } = card;
   const handleOpenTrailer = () => {
     window.open(trailerLink);
   };
+
   const timeDuration = (duration) => {
     const hours = Math.floor(duration / 60);
     const minutes = duration % 60;
@@ -16,11 +21,19 @@ function MoviesCard({ card, handleLikeCard, inSavedMovies }) {
     }
     return hours + "h " + minutes + "min";
   };
-  const isLiked = inSavedMovies.find((i) => i.movieId === movieId);
 
-  const onClick = () =>{
-    handleLikeCard(card)
-  }
+  const onClickLike = () => {
+    handleLikeCard(card);
+  };
+
+  const onClickDelete = () => {
+    handleDeleteCard(card);
+  };
+
+  const saved = inSavedMovies.some(
+      (i) => i.movieId === card.id || i.movieId === card.movieId
+  );
+
   return (
     <li className="moviesCard">
       <div className="moviesCard__about">
@@ -30,13 +43,17 @@ function MoviesCard({ card, handleLikeCard, inSavedMovies }) {
           <button
             type="button"
             className={`moviesCard__like ${
-              isLiked ? "moviesCard__time_active" : ""
+                saved ? "moviesCard__time_active" : ""
             }`}
-            onClick={onClick}
+            onClick={onClickLike}
           />
         </Route>
         <Route path="/saved-movies">
-          <button type="button" className="moviesCard__del" />
+          <button
+            type="button"
+            className="moviesCard__del"
+            onClick={onClickDelete}
+          />
         </Route>
       </div>
       <img

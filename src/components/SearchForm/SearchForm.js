@@ -48,7 +48,7 @@ function SearchForm({ onSearch }) {
           {/*</div>*/}
         </form>
         <div className="searchForm__helper">
-          <FilterCheckbox register={register}/>
+          <FilterCheckbox register={register} />
         </div>
       </div>
       <p className="searchForm__error">

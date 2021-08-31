@@ -17,8 +17,10 @@ function Movies({
   inErrorSearch,
   inSearch,
   handleLikeCard,
-  inSavedMovies,
   inDataMovies,
+  renderApplication,
+  handleDeleteCard,
+  inSavedMovies,
 }) {
   return (
     <>
@@ -36,8 +38,10 @@ function Movies({
             handleAddCard={handleAddCard}
             inSearch={inSearch}
             handleLikeCard={handleLikeCard}
-            inSavedMovies={inSavedMovies}
             inDataMovies={inDataMovies}
+            renderApplication={renderApplication}
+            handleDeleteCard={handleDeleteCard}
+            inSavedMovies={inSavedMovies}
           />
         )}
       </div>

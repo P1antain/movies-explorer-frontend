@@ -37,6 +37,7 @@ function App() {
     history.push("/movies");
   };
   const onRegister = (data) => {
+    console.log(data)
     mainApi
       .register(data.name, data.email, data.password)
       .then(handleResponse)

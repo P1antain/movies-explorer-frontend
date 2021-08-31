@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AuthPage from "../AuthPage/AuthPage";
 import "../AuthPage/Auth.css";
-import { schemaSearch } from "../../utils/Constants";
+import {schemaRegister} from "../../utils/Constants";
 
 function Register({ onRegister, inError }) {
   const {
@@ -11,7 +11,7 @@ function Register({ onRegister, inError }) {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    resolver: yupResolver(schemaSearch),
+    resolver: yupResolver(schemaRegister),
     mode: "onChange",
   });
   const onSubmit = (data) => {
@@ -36,7 +36,7 @@ function Register({ onRegister, inError }) {
           className="auth__input"
           placeholder="Ваше name"
           id="Name"
-          {...register("name", { required: true })}
+          {...register("name", )}
         />
 
         <span className="authPage__error">{errors.name?.message}</span>
@@ -61,7 +61,6 @@ function Register({ onRegister, inError }) {
           className="auth__input"
           placeholder="Ваш password"
           id="Password"
-          autoComplete="off"
           {...register("password")}
         />
         <span className="authPage__error">{errors.password?.message}</span>

@@ -108,8 +108,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: "http://localhost:3000",
-  // url: "https://p1antain.api.nomoredomains.club",
+  // url: "http://localhost:3000",
+  url: "https://p1antain.api.nomoredomains.club"
 });
 
 export default mainApi;

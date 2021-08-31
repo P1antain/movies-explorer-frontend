@@ -241,6 +241,7 @@ function App() {
           setSavedMovies(result);
           setDataMovies(result);
           getUserMovies()
+
         })
         .catch((err) => {
           console.log(err);
@@ -258,6 +259,9 @@ function App() {
         setSavedMovies(result);
         setDataMovies(result);
         getUserMovies()
+        if(inDataMovies.length===1){
+          history.go(0)
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -15,7 +15,6 @@ function MoviesCardList({
   handleDeleteCard,
   inSavedMovies,
 }) {
-
   return (
     <>
       {" "}

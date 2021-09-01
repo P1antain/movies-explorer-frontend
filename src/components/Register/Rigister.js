@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AuthPage from "../AuthPage/AuthPage";
 import "../AuthPage/Auth.css";
-import {schemaRegister} from "../../utils/Constants";
+import { schemaRegister } from "../../utils/Constants";
 
 function Register({ onRegister, inError }) {
   const {
@@ -36,7 +36,7 @@ function Register({ onRegister, inError }) {
           className="auth__input"
           placeholder="Ваше name"
           id="Name"
-          {...register("name", )}
+          {...register("name")}
         />
 
         <span className="authPage__error">{errors.name?.message}</span>

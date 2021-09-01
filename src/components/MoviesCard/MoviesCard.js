@@ -2,12 +2,7 @@ import React from "react";
 import "./MoviesCard.css";
 import { Route } from "react-router-dom";
 
-function MoviesCard({
-  card,
-  handleLikeCard,
-  handleDeleteCard,
-  inSavedMovies,
-}) {
+function MoviesCard({ card, handleLikeCard, handleDeleteCard, inSavedMovies }) {
   const { duration, image, trailerLink } = card;
   const handleOpenTrailer = () => {
     window.open(trailerLink);
@@ -31,7 +26,7 @@ function MoviesCard({
   };
 
   const saved = inSavedMovies.some(
-      (i) => i.movieId === card.id || i.movieId === card.movieId
+    (i) => i.movieId === card.id || i.movieId === card.movieId
   );
 
   return (
@@ -43,7 +38,7 @@ function MoviesCard({
           <button
             type="button"
             className={`moviesCard__like ${
-                saved ? "moviesCard__time_active" : ""
+              saved ? "moviesCard__time_active" : ""
             }`}
             onClick={onClickLike}
           />

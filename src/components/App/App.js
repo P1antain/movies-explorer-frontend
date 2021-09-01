@@ -30,8 +30,7 @@ function App() {
   const [inWindowWidth, setWindowWidth] = React.useState(1180);
   const history = useHistory();
   const handleResponse = (data) => {
-    const { jwt } = data;
-    localStorage.setItem("jwt", jwt);
+    localStorage.setItem("jwt", true);
     setCurrentUser(data);
     setLoggedIn(true);
     history.push("/movies");
@@ -186,13 +185,13 @@ function App() {
     }, 500);
   };
 
-  const onSearchSaved = (data) =>{
+  const onSearchSaved = (data) => {
     const filterSave = inDataMovies.filter((movie) => {
       return movie.nameRU.toLowerCase().includes(data.search.toLowerCase());
     });
-    setDataMovies(filterSave)
-    console.log(filterSave)
-  }
+    setDataMovies(filterSave);
+    console.log(filterSave);
+  };
 
   // Получаем размер экрана
   React.useEffect(() => {
@@ -236,7 +235,6 @@ function App() {
     const splicedSearch = inSearch.splice(0, startNumber);
     setResult(splicedSearch);
   }, [inSearch]);
-
 
   const handleLikeCard = (data) => {
     const item = inSavedMovies.filter(

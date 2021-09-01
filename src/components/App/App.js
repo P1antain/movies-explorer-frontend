@@ -29,12 +29,7 @@ function App() {
   const [inError, setError] = React.useState("");
   const [inWindowWidth, setWindowWidth] = React.useState(1180);
   const history = useHistory();
-  const handleResponse = (data) => {
-    localStorage.setItem("jwt", true);
-    setCurrentUser(data);
-    setLoggedIn(true);
-    history.push("/movies");
-  };
+
   const onRegister = (data) => {
     console.log(data);
     mainApi
@@ -49,23 +44,15 @@ function App() {
       .login(data.email, data.password)
       .then(handleResponse)
       .catch(() => {
-        setError("Ошибка при регистрации");
+        setError("Ошибка при входе");
       });
   };
-  const checkToken = () => {
-    if (localStorage.getItem("jwt")) {
-      setLoggedIn(true);
-      history.push("/movies");
-    }
+  const handleResponse = (data) => {
+    setCurrentUser(data);
+    setLoggedIn(true);
+    history.push("/movies");
   };
-  const getData = () => {
-    mainApi
-      .getContent()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => console.log(err));
-  };
+
   const getUserMovies = () => {
     return mainApi
       .getMovies()
@@ -79,19 +66,18 @@ function App() {
       });
   };
   React.useEffect(() => {
-    const getAllContent = async () => {
-      if (loggedIn) {
-        await getData();
-      }
-      if (loggedIn) {
-        await getUserMovies();
-      }
-    };
-    getAllContent();
+      mainApi
+          .getContent()
+          .then((data) => {
+            setCurrentUser(data);
+            setLoggedIn(true)
+            history.push('/movies')
+          })
+          .catch((err) => console.log(err));
+    getUserMovies()
   }, [loggedIn]);
 
   React.useEffect(() => {
-    checkToken();
     if (loggedIn && localStorage.getItem("searchMovies")) {
       setSearch(JSON.parse(localStorage.getItem("searchMovies")));
     }
@@ -131,11 +117,19 @@ function App() {
   }, [loggedIn]);
 
   const handleLogOut = () => {
-    localStorage.clear();
-    localStorage.removeItem("searchMovies");
-    localStorage.removeItem("searchMoviesDuration");
-    localStorage.removeItem("jwt");
-    history.push("/");
+
+    mainApi.endSession()
+        .then((data)=>{
+          console.log(data)
+          setLoggedIn(false)
+          localStorage.clear();
+          localStorage.removeItem("searchMovies");
+          localStorage.removeItem("searchMoviesDuration");
+          history.push("/");
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
   };
 
   const onEdit = (data) => {

@@ -77,6 +77,18 @@
 .profile__exit:hover {
   opacity: 0.6;
 }
+.profile__save-ok{
+  color: #2be080;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 10px auto 0;
+}
+.profile__save-false{
+  color: #ff4062;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 10px auto 0;
+}
 @media all and (max-width: 767px) {
   .profile__name {
     padding-top: 70px;

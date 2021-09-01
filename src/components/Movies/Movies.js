@@ -21,10 +21,11 @@ function Movies({
   renderApplication,
   handleDeleteCard,
   inSavedMovies,
+  loggedIn,
 }) {
   return (
     <>
-      <Header ifLoginIn={true} />
+      <Header loggedIn={loggedIn} />
       <div className="movies">
         <SearchForm onSearch={onSearch} isCheckbox={isCheckbox} />
         {isPreloader ? (

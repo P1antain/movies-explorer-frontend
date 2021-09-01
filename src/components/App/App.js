@@ -25,6 +25,8 @@ function App() {
   const [inSavedMovies, setSavedMovies] = React.useState([]);
   const [inDataMovies, setDataMovies] = React.useState([]);
   const [inClickCard, setClickCard] = React.useState(false);
+  const [inProfileSave, setProfileSave] = React.useState(false)
+  const [inProfileError, setProfileError] = React.useState(false)
   const [currentUser, setCurrentUser] = React.useState({});
   const [inError, setError] = React.useState("");
   const [inWindowWidth, setWindowWidth] = React.useState(1180);
@@ -50,31 +52,39 @@ function App() {
   const handleResponse = (data) => {
     setCurrentUser(data);
     setLoggedIn(true);
-    history.push("/movies");
+    // history.push("/movies");
   };
 
   const getUserMovies = () => {
     return mainApi
       .getMovies()
       .then((data) => {
-        setSavedMovies(data);
         setDataMovies(data);
-        localStorage.setItem("savedMovies", JSON.stringify(data));
+        setSavedMovies(data);
+        console.log(inDataMovies)
+        console.log(inSavedMovies)
+        localStorage.setItem("savedMovies", JSON.stringify(data) || []);
       })
       .catch((err) => {
         console.log(err);
+        console.log('ошибка тут в getUserMovies')
       });
   };
   React.useEffect(() => {
-      mainApi
-          .getContent()
-          .then((data) => {
-            setCurrentUser(data);
-            setLoggedIn(true)
-            history.push('/movies')
-          })
-          .catch((err) => console.log(err));
-    getUserMovies()
+    if (loggedIn) {
+      history.push("/movies");
+    }
+    mainApi
+      .getContent()
+      .then((data) => {
+        setCurrentUser(data);
+        setLoggedIn(true);
+      })
+      .catch((err) => console.log(err));
+    getUserMovies().then((data)=>{
+      console.log(data)
+    });
+
   }, [loggedIn]);
 
   React.useEffect(() => {
@@ -117,22 +127,24 @@ function App() {
   }, [loggedIn]);
 
   const handleLogOut = () => {
-
-    mainApi.endSession()
-        .then((data)=>{
-          console.log(data)
-          setLoggedIn(false)
-          localStorage.clear();
-          localStorage.removeItem("searchMovies");
-          localStorage.removeItem("searchMoviesDuration");
-          history.push("/");
-        })
-        .catch((err)=>{
-          console.log(err)
-        })
+    mainApi
+      .endSession()
+      .then((data) => {
+        console.log(data);
+        setLoggedIn(false);
+        localStorage.clear();
+        localStorage.removeItem("searchMovies");
+        localStorage.removeItem("searchMoviesDuration");
+        history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const onEdit = (data) => {
+    setProfileSave(false)
+    setProfileError(false)
     mainApi
       .updateUser(data)
       .then((update) => {
@@ -140,8 +152,16 @@ function App() {
           name: update.name,
           email: update.email,
         });
+        setProfileSave(true)
+
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+        setProfileError(true)
+      });
+    setTimeout(function () {
+      setProfileSave(false) || setProfileError(false);
+    }, 4500);
   };
 
   const onSearch = (data) => {
@@ -234,8 +254,9 @@ function App() {
     const item = inSavedMovies.filter(
       (i) => i.movieId === data.movieId || i.movieId === data.id
     );
-    if (item.length !== 0) {
+    if (item.length > 0) {
       handleDeleteCard(item[0]);
+      console.log(item)
     } else {
       mainApi
         .saveMovies(data)
@@ -247,6 +268,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
+          console.log('ошибка тут')
         });
     }
   };
@@ -256,26 +278,27 @@ function App() {
       .deleteMovie(card)
       .then((movie) => {
         const result = inSavedMovies.filter(
-          (item) => item.movieId !== movie.id && item.movieId !== movie.movieId
+          (item) => item.movieId !== movie._id && item.movieId !== movie.movieId
         );
         setSavedMovies(result);
         setDataMovies(result);
         getUserMovies();
         if (inDataMovies.length === 1) {
-          history.go(0);
+          console.log('hello')
         }
       })
       .catch((err) => {
         console.log(err);
+        console.log('ошибка тут')
       });
   };
 
   return (
-    <div className="page">
-      <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
         <Switch>
           <Route exact path="/">
-            <Header loggedIn={false} />
+            <Header loggedIn={loggedIn} />
             <Main />
             <Footer />
           </Route>
@@ -317,6 +340,8 @@ function App() {
             currentUser={currentUser}
             exitSession={handleLogOut}
             onEdit={onEdit}
+            inProfileSave={inProfileSave}
+            inProfileError={inProfileError}
           />
           <Route path="/signin">
             <Login onLogin={onLogin} inError={inError} />
@@ -328,8 +353,8 @@ function App() {
             <NotFound />
           </Route>
         </Switch>
-      </CurrentUserContext.Provider>
-    </div>
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

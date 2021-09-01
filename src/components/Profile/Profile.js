@@ -6,16 +6,27 @@ import Header from "../Header/Header";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaEdit } from "../../utils/Constants";
 
-function Profile({ exitSession, onEdit }) {
+function Profile({
+  exitSession,
+  onEdit,
+  loggedIn,
+  inProfileSave,
+  inProfileError,
+}) {
   const currentUser = React.useContext(CurrentUserContext);
   const { name, email } = currentUser;
+
   const {
     register,
     handleSubmit,
-    formState: { isValid, errors },
+    formState: { isValid, isDirty, errors },
   } = useForm({
     resolver: yupResolver(schemaEdit),
     mode: "onChange",
+    defaultValues: {
+      name: currentUser.name,
+      email: currentUser.email,
+    },
   });
 
   function handleLogOut() {
@@ -27,7 +38,7 @@ function Profile({ exitSession, onEdit }) {
   };
   return (
     <>
-      <Header ifLoginIn={true} />
+      <Header loggedIn={loggedIn} />
       <div className="profile">
         <h2 className="profile__name">Привет, {name}!</h2>
         <form className="profile__form" onSubmit={handleSubmit(onSubmit)}>
@@ -48,8 +59,14 @@ function Profile({ exitSession, onEdit }) {
               {...register("email")}
             />
             <span className="profile__error">{errors.email?.message}</span>
+            {inProfileSave && <p className="profile__save-ok">Ваши данные успешно сохранены</p>}
+            {inProfileError && <p className="profile__save-false">Данные не сохранены, ошибка сервера</p>}
           </div>
-          <button className="profile__edit" type="submit" disabled={!isValid}>
+          <button
+            className="profile__edit"
+            type="submit"
+            disabled={!isDirty && isValid}
+          >
             Редактировать
           </button>
         </form>

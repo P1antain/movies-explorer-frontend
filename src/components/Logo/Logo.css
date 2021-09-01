@@ -1,4 +1,9 @@
 .logoPage {
   width: 38px;
   height: 38px;
+  cursor: pointer;
+  transition: all 1s;
+}
+.logoPage:hover {
+  opacity: 0.6;
 }

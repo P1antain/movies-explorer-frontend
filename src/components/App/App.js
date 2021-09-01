@@ -25,8 +25,8 @@ function App() {
   const [inSavedMovies, setSavedMovies] = React.useState([]);
   const [inDataMovies, setDataMovies] = React.useState([]);
   const [inClickCard, setClickCard] = React.useState(false);
-  const [inProfileSave, setProfileSave] = React.useState(false)
-  const [inProfileError, setProfileError] = React.useState(false)
+  const [inProfileSave, setProfileSave] = React.useState(false);
+  const [inProfileError, setProfileError] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [inError, setError] = React.useState("");
   const [inWindowWidth, setWindowWidth] = React.useState(1180);
@@ -52,24 +52,25 @@ function App() {
   const handleResponse = (data) => {
     setCurrentUser(data);
     setLoggedIn(true);
-    // history.push("/movies");
   };
 
   const getUserMovies = () => {
     return mainApi
       .getMovies()
       .then((data) => {
-        setDataMovies(data);
         setSavedMovies(data);
-        console.log(inDataMovies)
-        console.log(inSavedMovies)
         localStorage.setItem("savedMovies", JSON.stringify(data) || []);
       })
       .catch((err) => {
         console.log(err);
-        console.log('ошибка тут в getUserMovies')
+        console.log("ошибка тут в getUserMovies");
       });
   };
+  React.useEffect(() => {
+    if (loggedIn) {
+      getUserMovies();
+    }
+  }, [loggedIn]);
   React.useEffect(() => {
     if (loggedIn) {
       history.push("/movies");
@@ -81,10 +82,6 @@ function App() {
         setLoggedIn(true);
       })
       .catch((err) => console.log(err));
-    getUserMovies().then((data)=>{
-      console.log(data)
-    });
-
   }, [loggedIn]);
 
   React.useEffect(() => {
@@ -143,8 +140,8 @@ function App() {
   };
 
   const onEdit = (data) => {
-    setProfileSave(false)
-    setProfileError(false)
+    setProfileSave(false);
+    setProfileError(false);
     mainApi
       .updateUser(data)
       .then((update) => {
@@ -152,12 +149,11 @@ function App() {
           name: update.name,
           email: update.email,
         });
-        setProfileSave(true)
-
+        setProfileSave(true);
       })
       .catch((err) => {
-        console.log(err)
-        setProfileError(true)
+        console.log(err);
+        setProfileError(true);
       });
     setTimeout(function () {
       setProfileSave(false) || setProfileError(false);
@@ -256,19 +252,17 @@ function App() {
     );
     if (item.length > 0) {
       handleDeleteCard(item[0]);
-      console.log(item)
     } else {
       mainApi
         .saveMovies(data)
         .then((movie) => {
           const result = [movie, ...inSavedMovies];
           setSavedMovies(result);
-          setDataMovies(result);
           getUserMovies();
         })
         .catch((err) => {
           console.log(err);
-          console.log('ошибка тут')
+          console.log("ошибка тут");
         });
     }
   };
@@ -278,18 +272,17 @@ function App() {
       .deleteMovie(card)
       .then((movie) => {
         const result = inSavedMovies.filter(
-          (item) => item.movieId !== movie._id && item.movieId !== movie.movieId
+          (item) => item.movieId !== movie.id && item.movieId !== movie.movieId
         );
         setSavedMovies(result);
-        setDataMovies(result);
         getUserMovies();
-        if (inDataMovies.length === 1) {
-          console.log('hello')
+        if (inSavedMovies.length === 1) {
+          setSavedMovies([])
         }
       })
       .catch((err) => {
         console.log(err);
-        console.log('ошибка тут')
+        console.log("ошибка тут");
       });
   };
 
@@ -316,6 +309,7 @@ function App() {
             inErrorSearch={inErrorSearch}
             handleLikeCard={handleLikeCard}
             inSavedMovies={inSavedMovies}
+            inDataMovies={inDataMovies}
           />
           <ProtectedRoute
             path="/saved-movies"

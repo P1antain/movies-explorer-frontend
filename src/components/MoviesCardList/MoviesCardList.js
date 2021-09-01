@@ -10,7 +10,6 @@ function MoviesCardList({
   handleAddCard,
   inSearch,
   handleLikeCard,
-  inDataMovies,
   renderApplication,
   handleDeleteCard,
   inSavedMovies,
@@ -38,7 +37,7 @@ function MoviesCardList({
             );
           })}
         {renderApplication &&
-          inDataMovies.map((card) => {
+          inSavedMovies.map((card) => {
             return (
               <MoviesCard
                 card={card}

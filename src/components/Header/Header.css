@@ -1,181 +1,180 @@
-.header__wrapper{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #F3C1F8;
-    padding: 18px 70px;
+.header__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3c1f8;
+  padding: 18px 70px;
 }
-.header__wrapper_authorization{
-    background: none;
+.header__wrapper_authorization {
+  background: none;
 }
-.header__logo{
-    width: 38px;
-    height: 38px;
+.header__logo {
+  width: 38px;
+  height: 38px;
 }
-.header__signup{
-    background: none;
-    border: 0;
-    cursor: pointer;
-    padding: 0 30px 0 0;
-    transition: all 1s;
+.header__signup {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0 30px 0 0;
+  transition: all 1s;
 }
-.header__signin{
-    background: #000000;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 3px;
-    color: white;
-    padding: 8px 20px;
-    cursor: pointer;
-    transition: all 1s;
+.header__signin {
+  background: #000000;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  color: white;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 1s;
 }
 .header__signup,
-.header__signin{
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
+.header__signin {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
 }
 .header__signup:hover,
-.header__signin:hover{
-    opacity: 0.6;
+.header__signin:hover {
+  opacity: 0.6;
 }
-.header__account{
-    display: flex;
-    align-items: center;
+.header__account {
+  display: flex;
+  align-items: center;
 }
-.header__name{
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    align-items: center;
-    cursor: pointer;
-    text-decoration: none;
-    color: #000000;
-    transition: all 1s;
+.header__name {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000000;
+  transition: all 1s;
 }
-.header__image{
-    width: 10px;
-    height: 10px;
-    padding: 10px;
-    margin-left: 13px;
-    cursor: pointer;
-    transition: all 1s;
+.header__image {
+  width: 10px;
+  height: 10px;
+  padding: 10px;
+  margin-left: 13px;
+  cursor: pointer;
+  transition: all 1s;
 }
 .header__name:hover,
-.header__image:hover{
-    opacity: 0.6;
+.header__image:hover {
+  opacity: 0.6;
 }
-.header__burger{
+.header__burger {
+  display: none;
+}
+.header__menu {
+  display: none;
+  transition: 1s toLeft;
+}
+.header__link {
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 18px;
+  text-decoration: none;
+  color: #000000;
+  margin-right: 16px;
+}
+.header__link:last-child {
+  margin-right: 0;
+}
+.header__link_active {
+  border-bottom: 2px solid #000000;
+}
+@media all and (max-width: 1279px) {
+  .header__wrapper {
+    padding: 18px 30px;
+  }
+  .header__account {
     display: none;
-}
-.header__menu{
+  }
+  .header__burger {
+    display: block;
+    background: url("../../images/burger.svg");
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .header__burger_opened {
+    background: url("../../images/burgerClose.svg");
+    transition: all 0.2s;
+  }
+  .header__account_opened {
+    display: flex;
+    justify-content: center;
+  }
+  .header__elements {
     display: none;
-    transition: 1s toLeft;
-}
-.header__link{
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 18px;
-    text-decoration: none;
+  }
+  .header__menu_opened {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    justify-content: space-between;
+    top: 66px;
+    bottom: -16px;
+    background: #ffffff;
+    right: 0;
+    left: 32%;
+    padding: 109px 0 108px;
+    z-index: 1;
+    animation: 0.5s toLeft;
+  }
+  .header__item {
+    padding-bottom: 28px;
+  }
+  .header__item:last-child {
+    padding-bottom: 0;
+  }
+  .header__lists {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  .header__link {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
     color: #000000;
-    margin-right: 16px;
-}
-.header__link:last-child{
+    text-decoration: none;
     margin-right: 0;
+  }
 }
-.header__link_active{
-    border-bottom: 2px solid #000000;
-}
-@media all  and (max-width: 1279px){
-    .header__wrapper{
-       padding: 18px 30px;
-    }
-    .header__account{
-        display: none;
-    }
-    .header__burger{
-        display: block;
-        background: url("../../images/burger.svg");
-        width: 44px;
-        height: 44px;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    .header__burger_opened{
-        background: url("../../images/burgerClose.svg");
-        transition: all 0.2s;
-    }
-    .header__account_opened{
-        display: flex;
-        justify-content: center;
-    }
-    .header__elements{
-        display: none;
-    }
-    .header__menu_opened{
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        justify-content: space-between;
-        top: 66px;
-        bottom: -16px;
-        background: #FFFFFF;
-        right: 0;
-        left: 32%;
-        padding: 109px 0 108px;
-        z-index: 1;
-        animation: 0.5s toLeft;
-    }
-    .header__item{
-        padding-bottom: 28px;
-    }
-    .header__item:last-child{
-        padding-bottom: 0;
-    }
-    .header__lists{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-    }
-    .header__link{
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 22px;
-        color: #000000;
-        text-decoration: none;
-        margin-right: 0;
-    }
-}
-@media all  and (max-width: 767px){
-    .header__wrapper{
-        padding: 18px 14px;
-    }
-    .header__signup{
-        padding: 0 14px 0 0;
-    }
-    .header__signin{
-        padding: 5px 12px;
-    }
-    .header__signup,
-    .header__signin{
-        font-size: 10px;
-    }
-    .header__menu_opened{
-        padding: 44px 0 64px;
-        left: 0;
-    }
-
+@media all and (max-width: 767px) {
+  .header__wrapper {
+    padding: 18px 14px;
+  }
+  .header__signup {
+    padding: 0 14px 0 0;
+  }
+  .header__signin {
+    padding: 5px 12px;
+  }
+  .header__signup,
+  .header__signin {
+    font-size: 10px;
+  }
+  .header__menu_opened {
+    padding: 44px 0 64px;
+    left: 0;
+  }
 }
 @keyframes toLeft {
-    0%{
-       opacity: 0;
-       top: 0;
-    }
-    100%{
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+    top: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

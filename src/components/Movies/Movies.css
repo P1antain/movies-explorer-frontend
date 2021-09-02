@@ -1,5 +1,5 @@
-.movies{
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+.movies {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
